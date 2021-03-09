@@ -26,6 +26,7 @@ class App extends React.Component {
   
   render() {
     return(
+      <h1>Let's go!</h1>
     );
   }
   

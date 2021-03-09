@@ -1,7 +1,7 @@
 {
   "name": "starter-template",
   "version": "1.1.0",
-  "description": "Template for Web Apps",
+  "description": "PokeGacha in React Native",
   "author": "Katie Poa",
   "license": "ISC",
   "engines": {
@@ -22,10 +22,10 @@
     "styled-components": "^5.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.6",
-    "@babel/preset-env": "^7.11.5",
-    "@babel/preset-react": "^7.10.4",
-    "babel-loader": "^8.1.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   }
