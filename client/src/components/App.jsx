@@ -3,6 +3,7 @@ import AddTurtles from './AddTurtles.jsx';
 import FormHooks from './FormHooks.jsx';
 import FormHooksUseForm from './FormHooksUseForm.jsx';
 import Clicker from './Clicker.jsx';
+import SWMovies from './SWMovies.jsx';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -14,7 +15,7 @@ class App extends React.Component {
   }
   
   componentDidMount() {
-    this.getAll();
+    // this.getAll();
   }
   
   getAll() {
@@ -36,6 +37,7 @@ class App extends React.Component {
         <FormHooksUseForm />
         <br></br>
         <Clicker />
+        <SWMovies />
       </div>
     );
   }
