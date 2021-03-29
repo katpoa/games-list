@@ -1,4 +1,8 @@
 import React from 'react';
+import AddTurtles from './AddTurtles.jsx';
+import FormHooks from './FormHooks.jsx';
+import FormHooksUseForm from './FormHooksUseForm.jsx';
+import Clicker from './Clicker.jsx';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -6,7 +10,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: []
     };
   }
   
@@ -26,7 +29,14 @@ class App extends React.Component {
   
   render() {
     return(
-      <h1>Let's go!</h1>
+      <div>
+        <h1>React Hooks ~</h1>
+        <AddTurtles />
+        <FormHooks />
+        <FormHooksUseForm />
+        <br></br>
+        <Clicker />
+      </div>
     );
   }
   
