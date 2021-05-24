@@ -27,12 +27,14 @@ app.get('/api/', async (req, res) => {
       if (!response1) { console.log('Error: couldnt get data' ); return res.sendStatus(500)}
       const artwork = async () => {
           for (let i = 0; i < response1.data.length; i++) {
-          const art = await axios.post('https://api.igdb.com/v4/covers/', `fields url; where id = ${response1.data[i].cover};`,  { headers: { 'Client-ID': client_id, 'Authorization': `Bearer ${response.data.access_token}` }});
-          if (!art) { console.log('Error: couldnt get cover artwork'); return res.sendStatus(500)}
-          console.log(art.data, 'link of cover image');
-          response1.data[i].cover = art.data.url.slice(2);
+            response1.data[i].favorite = false;
+            const art = await axios.post('https://api.igdb.com/v4/covers/', `fields url; where id = ${response1.data[i].cover};`,  { headers: { 'Client-ID': client_id, 'Authorization': `Bearer ${response.data.access_token}` }});
+            if (!art) { console.log('Error: couldnt get cover artwork'); return res.sendStatus(500)}
+            console.log(art.data, 'link of cover image');
+            response1.data[i].cover = art.data.url.slice(2);
           }
       }
+      artwork();
       res.status(200).send(response1.data);
       } catch(e) {
       console.log(e);

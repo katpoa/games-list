@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import GameEntry from './GameEntry.jsx';
+
 import axios from 'axios';
 import 'babel-polyfill';
 import styled from 'styled-components';
@@ -15,7 +17,7 @@ const Icon = styled.img`
     min-width: 28px;
 `;
 
-const Favorites = () => {
+const Favorites = ({ list, toggleFavorite }) => {
     
     return (
         <div>
@@ -23,6 +25,13 @@ const Favorites = () => {
                 <Icon src={'favorites.svg'}/>
                 <h1>FAVORITE GAMES</h1>
             </Title>
+            <div>
+                {list.map(game => {
+                    if (game.favorite) {
+                        return <GameEntry key={game.id} game={game} toggleFavorite={toggleFavorite}/>;
+                    }
+                })}
+            </div>
         </div>
     );
 };

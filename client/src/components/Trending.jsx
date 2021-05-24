@@ -17,7 +17,7 @@ const Icon = styled.img`
     min-width: 28px;
 `;
 
-const Trending = ({ list, addFavorite, deleteFavorite }) => {
+const Trending = ({ list, toggleFavorite }) => {
     const [movie, setMovie] = useState(1);
     const [info, setInfo] = useState('');
     useEffect(() => {
@@ -39,7 +39,7 @@ const Trending = ({ list, addFavorite, deleteFavorite }) => {
             </Title>
             <div>
                 {list.map(game => (
-                    <GameEntry key={game.id} game={game} addFavorite={addFavorite} deleteFavorite={deleteFavorite}/>
+                    <GameEntry key={game.id} game={game} toggleFavorite={toggleFavorite}/>
                 ))}
             </div>
         </div>

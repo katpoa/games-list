@@ -7,6 +7,6 @@ Coding challenge
 
 From within the root directory:
 
-npm install
-npm start
-npm run react-dev
+* npm install
+* npm start
+* npm run react-dev

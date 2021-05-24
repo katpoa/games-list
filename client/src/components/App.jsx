@@ -23,11 +23,10 @@ class App extends React.Component {
       navBar: true,
       tab: 'trending',
       list: [],
-      favorites: [],
     };
     this.setTab = this.setTab.bind(this);
-    this.addFavorite = this.addFavorite.bind(this);
-    this.deleteFavorite = this.deleteFavorite.bind(this);
+    this.toggleFavorite = this.toggleFavorite.bind(this);
+    // this.deleteFavorite = this.deleteFavorite.bind(this);
   }
 
   componentDidMount() {
@@ -45,19 +44,15 @@ class App extends React.Component {
     this.setState({tab: string});
   }
 
-  addFavorite (gameId) {
-    const { list, favorites } = this.state;
+  toggleFavorite (gameId) {
+    const { list } = this.state;
     // update to database through server API endpoints
-    const favorite = list.filter(game => game.id === gameId);
-    favorites.push(favorite[0]);
-    this.setState({ favorites: favorites });
-  }
-
-  deleteFavorite (gameId) {
-    const { list, favorites } = this.state;
-    // update to database through server API endpoints
-    const updated = list.filter(game => game.id !== gameId);
-    this.setState({ favorites: updated });
+    list.map(game => {
+      if (game.id === gameId) {
+        game.favorite = !game.favorite;
+      }
+    });
+    this.setState({ list: list });
   }
   
   render() {
@@ -66,10 +61,10 @@ class App extends React.Component {
       this.getAll();
     }
     const currentTab = tab === 'trending' 
-      ? <Trending list={list} addFavorite={this.addFavorite} deleteFavorite={this.deleteFavorite}/> 
+      ? <Trending list={list} toggleFavorite={this.toggleFavorite}/> 
       : tab === 'search' 
-        ? <Search list={list} addFavorite={this.addFavorite} deleteFavorite={this.deleteFavorite}/> 
-        : <Favorites />;
+        ? <Search list={list} toggleFavorite={this.toggleFavorite}/> 
+        : <Favorites list={list} toggleFavorite={this.toggleFavorite}/>;
     const toggleBar = navBar 
       ? <Footer tab={tab} setTab={this.setTab}/> 
       : <div></div>;

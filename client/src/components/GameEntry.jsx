@@ -34,21 +34,14 @@ const Genre = styled.div`
     color: #e6e9eb;
 `;
 
-const GameEntry = ({game, addFavorite, deleteFavorite}) => {
-    const [favorite, setFavorite] = useState(false);
+const GameEntry = ({game, toggleFavorite}) => {
+    // const [isFavorite, setFavorite] = useState(favorite);
     return (
         <div>
-            <Artwork src={game.cover}></Artwork>
-            <Button onClick={() => {
-                if (favorite) {
-                    deleteFavorite(game.id)
-                } else {
-                    addFavorite(game.id)
-                }
-                setFavorite(!favorite);
-            }}
+            <Artwork src={'https://' + game.cover}></Artwork>
+            <Button onClick={() => toggleFavorite(game.id) }
             >
-                <Icon src={favorite ? 'starFill.svg' : 'star.svg'}/>
+                <Icon src={game.favorite ? 'starFill.svg' : 'star.svg'}/>
             </Button>
             <Info>
                 <Title>

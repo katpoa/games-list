@@ -2,6 +2,13 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import GameEntry from './GameEntry.jsx';
 
+const Container = styled.div`
+    height: 100vh;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+`;
+
 const Bar = styled.div`
     display: flex;
     flex-direction: row;
@@ -27,11 +34,22 @@ const Input = styled.input`
 const None = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
     color: #e6e9eb;
+    margin: 120px;
 `;
 
-const Search = ({ list, addFavorite, deleteFavorite }) => {
+const Text = styled.div`
+    display: flex;
+    // justify-content: center;
+    white-space: nowrap;
+`;
+
+const Image = styled.img`
+    max-height: 133px;
+    max-width: 133px;
+`;
+
+const Search = ({ list, toggleFavorite }) => {
     const [text, setText] = useState('');
     const handleChange = (e) => {
         setText(e.target.value.toUpperCase());
@@ -42,16 +60,22 @@ const Search = ({ list, addFavorite, deleteFavorite }) => {
     const search = (string) => {
         const updated = [];
         list.map(game => {
-            if (game.name.toUpperCase().includes(string)) {
-            // if (game.name.toUpperCase() === string) {
-                updated.push(game)
-            } 
+            // if (game.name.toUpperCase().includes(string)) {
+            if (game.name.toUpperCase() === string) {
+                updated.push(game);
+                setResults(updated);
+            } else {
+                setResults([]);
+            }
         });
-        setResults(updated);
     }
-
+    const showResults = results.length
+        ? results.map(game => (
+            <GameEntry key={game.id} game={game} toggleFavorite={toggleFavorite}/>
+        ))
+        : <None><Image src='noResults.svg'/><Text>NO RESULTS FOUND<span></span></Text></None>;
     return (
-        <div>
+        <Container>
             <h1>You entered: {text.toUpperCase()}</h1>
             <Bar>
                 <Icon src="search.svg"/>
@@ -69,13 +93,8 @@ const Search = ({ list, addFavorite, deleteFavorite }) => {
                     <img src="clear.svg" style={{background: 'white'}}/>
                 </button>
             </Bar>
-            {results 
-                ? results.map(game => (
-                    <GameEntry key={game.id} game={game} addFavorite={addFavorite} deleteFavorite={deleteFavorite}/>
-                ))
-                : <None><img src='noResults.svg'/><div>NO RESULTS FOUND</div></None>
-            }
-        </div>
+            {showResults}
+        </Container>
     );
 }
 
