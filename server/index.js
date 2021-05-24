@@ -1,7 +1,6 @@
 const express = require('express');
 const axios = require('axios');
 
-// const controller = require('./controllers/controller');
 // const { client_id, client_secret } = require('../config.js');
 
 

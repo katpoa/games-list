@@ -1,7 +1,7 @@
 {
   "name": "starter-template",
   "version": "1.1.0",
-  "description": "Games List",
+  "description": "PokeGacha in React Native",
   "author": "Katie Poa",
   "license": "ISC",
   "engines": {
@@ -9,8 +9,7 @@
   },
   "scripts": {
     "react-dev": "webpack -d --watch",
-    "start": "nodemon server/index.js",
-    "heroku-postbuild": "webpack --mode production"
+    "start": "nodemon server/index.js"
   },
   "dependencies": {
     "axios": "^0.20.0",

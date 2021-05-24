@@ -3,8 +3,6 @@ import Trending from './Trending.jsx';
 import Search from './Search.jsx';
 import Favorites from './Favorites.jsx';
 import Footer from './Footer.jsx';
-import GameEntry from './GameEntry.jsx';
-
 
 import axios from 'axios';
 import styled from 'styled-components';

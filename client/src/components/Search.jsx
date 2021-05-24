@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import GameEntry from './GameEntry.jsx';
 
@@ -84,7 +84,7 @@ const Search = ({ list, toggleFavorite }) => {
                     // change color of cursor to purple
                 />
                 <button 
-                    onClick={() => setText('')}
+                    onClick={() => { setText(''); search('') }}
                     style={{border: 'transparent', background: 'white'}}
                 >
                     <img src="clear.svg" style={{background: 'white'}}/>
