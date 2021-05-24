@@ -52,8 +52,8 @@ const Image = styled.img`
 const Search = ({ list, toggleFavorite }) => {
     const [text, setText] = useState('');
     const handleChange = (e) => {
-        setText(e.target.value.toUpperCase());
-        search(e.target.value.toUpperCase());
+        setText(e.target.value);
+        search(e.target.value);
     }
     
     const [results, setResults] = useState([]);
@@ -61,13 +61,11 @@ const Search = ({ list, toggleFavorite }) => {
         const updated = [];
         list.map(game => {
             // if (game.name.toUpperCase().includes(string)) {
-            if (game.name.toUpperCase() === string) {
+            if (game.name.toUpperCase() === string.toUpperCase()) {
                 updated.push(game);
-                setResults(updated);
-            } else {
-                setResults([]);
             }
         });
+        setResults(updated);
     }
     const showResults = results.length
         ? results.map(game => (
@@ -76,18 +74,17 @@ const Search = ({ list, toggleFavorite }) => {
         : <None><Image src='noResults.svg'/><Text>NO RESULTS FOUND<span></span></Text></None>;
     return (
         <Container>
-            <h1>You entered: {text.toUpperCase()}</h1>
             <Bar>
                 <Icon src="search.svg"/>
                 <Input 
                     type="text"
-                    value={text}
+                    value={text.toUpperCase()}
                     placeholder="SEARCH GAMES"
                     onChange={handleChange}
                     // change color of cursor to purple
                 />
                 <button 
-                    onClick={() => showText('')}
+                    onClick={() => setText('')}
                     style={{border: 'transparent', background: 'white'}}
                 >
                     <img src="clear.svg" style={{background: 'white'}}/>

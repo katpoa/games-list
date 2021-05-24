@@ -21,26 +21,30 @@ app.use(cors());
 
 app.get('/api/', async (req, res) => {
   try {
-      const response = await axios.post(`https://id.twitch.tv/oauth2/token?client_id=${client_id}&client_secret=${client_secret}&grant_type=client_credentials`);
-      if (!response) { console.log('Error: couldnt get token' ); return res.sendStatus(500) }
-      const response1 = await axios.post('https://api.igdb.com/v4/games/', 'fields *;', { headers: { 'Client-ID': client_id, 'Authorization': `Bearer ${response.data.access_token}` }});
-      if (!response1) { console.log('Error: couldnt get data' ); return res.sendStatus(500)}
-      const artwork = async () => {
-          for (let i = 0; i < response1.data.length; i++) {
-            response1.data[i].favorite = false;
-            const art = await axios.post('https://api.igdb.com/v4/covers/', `fields url; where id = ${response1.data[i].cover};`,  { headers: { 'Client-ID': client_id, 'Authorization': `Bearer ${response.data.access_token}` }});
-            if (!art) { console.log('Error: couldnt get cover artwork'); return res.sendStatus(500)}
-            console.log(art.data, 'link of cover image');
-            response1.data[i].cover = art.data.url.slice(2);
-          }
-      }
-      artwork();
-      res.status(200).send(response1.data);
-      } catch(e) {
-      console.log(e);
-      res.sendStatus(500);
-      }
-  });
+    const response = await axios.post(`https://id.twitch.tv/oauth2/token?client_id=${client_id}&client_secret=${client_secret}&grant_type=client_credentials`);
+    if (!response) { console.log('Error: couldnt get token' ); return res.sendStatus(500) }
+    const response1 = await axios.post('https://api.igdb.com/v4/games/', 'fields *;', { headers: { 'Client-ID': client_id, 'Authorization': `Bearer ${response.data.access_token}` }});
+    if (!response1) { console.log('Error: couldnt get data' ); return res.sendStatus(500)}
+    res.status(200).send(response1.data);
+  } catch(e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+});
+
+app.get('/api/covers', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const response = await axios.post(`https://id.twitch.tv/oauth2/token?client_id=${client_id}&client_secret=${client_secret}&grant_type=client_credentials`);
+    if (!response) { console.log('Error: couldnt get token' ); return res.sendStatus(500) }
+    const art = await axios.post('https://api.igdb.com/v4/covers/', 'fields url; where id = ' + id,  { headers: { 'Client-ID': client_id, 'Authorization': `Bearer ${response.data.access_token}` }});
+    if (!art) { console.log('Error: couldnt get cover artwork'); return res.sendStatus(500)}
+    res.status(200).send(art.data);
+  } catch(e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+})
 
 app.use('/', express.static(path.join(__dirname, '../client/dist')));
 

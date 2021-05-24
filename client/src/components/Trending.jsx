@@ -18,24 +18,11 @@ const Icon = styled.img`
 `;
 
 const Trending = ({ list, toggleFavorite }) => {
-    const [movie, setMovie] = useState(1);
-    const [info, setInfo] = useState('');
-    useEffect(() => {
-        "use strict";
-        async function getData() {
-            const response = await axios.get(`https://swapi.dev/api/films/${movie}`);
-            setInfo(response.data);
-            console.log(response);
-        }
-        getData();
-    }, [movie]);
-
-
     return (
         <div>
             <Title>
                 <Icon src="trending.svg"/>
-                <h1>TRENDING GAMES</h1>
+                <h1 style={{whiteSpace: 'nowrap'}}>TRENDING GAMES</h1>
             </Title>
             <div>
                 {list.map(game => (

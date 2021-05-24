@@ -10,6 +10,8 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 const Container = styled.div`
+  font-family: Poppins, sans-serif;
+  fontWeight: 600;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -22,11 +24,13 @@ class App extends React.Component {
     this.state = {
       navBar: true,
       tab: 'trending',
-      list: [],
+      list: []
     };
+    this.getAll = this.getAll.bind(this);
     this.setTab = this.setTab.bind(this);
     this.toggleFavorite = this.toggleFavorite.bind(this);
-    // this.deleteFavorite = this.deleteFavorite.bind(this);
+    this.getCovers = this.getCovers.bind(this);
+    // this.matchArt = this.matchArt.bind(this);
   }
 
   componentDidMount() {
@@ -36,8 +40,34 @@ class App extends React.Component {
   getAll() {
     axios('/api/')
       .then(res => this.setState({list: res.data}))
+      .then(this.getCovers())
       .catch(err => console.log(err));
   }
+
+  getCovers() {
+    const { list } = this.state;
+    for (let i = 0; i < list.length; i++) {
+      axios('/api/covers?id=' + list[i].cover)
+        // .then(res => console.log(res.data.url))
+        .then(res => list[i].cover = 'https:' + res.data.url.replace('t_thumb', 't_cover_big'))
+        // .then(res => this.setState({ covers: res.data }))
+        .catch(err => console.log(err));
+    }
+    // this.matchArt();
+  }
+
+  // matchArt() {
+  //   const { list, covers } = this.state;
+  //   for (let i = 0; i < list.length; i++) {
+  //     for (let j = 0; j < covers.length; j++) {
+  //       if (list[i].cover === covers[j].id) {
+  //         console.log(covers[j].url, ' this is the cover image url')
+  //         list[i].cover = 'https:' + covers[j].url.replace('t_thumb', 't_cover_big');
+  //       }
+  //     }
+  //   }
+  //   this.setState({ list: list });
+  // }
 
   setTab(string) {
     const { tab } = this.state;
@@ -57,9 +87,9 @@ class App extends React.Component {
   
   render() {
     const { navBar, tab, list } = this.state;
-    if (list.expires_in <= 3) {
-      this.getAll();
-    }
+    // if (list.expires_in <= 3) {
+    //   this.getAll();
+    // }
     const currentTab = tab === 'trending' 
       ? <Trending list={list} toggleFavorite={this.toggleFavorite}/> 
       : tab === 'search' 
