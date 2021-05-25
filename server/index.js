@@ -5,7 +5,7 @@ const axios = require('axios');
 
 
 const app = express();
-const port = 8080;
+const port = 3000;
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -50,18 +50,3 @@ app.use('/', express.static(path.join(__dirname, '../client/dist')));
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
-
-
-Array.prototype._map = async function(cb) {
-  try {
-    const arr = this;
-    const results = [];
-    for (let i = 0; i < arr.length; i++) {
-      const newItem = await cb(arr[i]);
-      results.push(newItem);
-    }
-    return results;
-  } catch(e) {
-    throw new Error(e);
-  }
-}
