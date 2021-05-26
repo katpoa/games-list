@@ -13,7 +13,12 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
-  justify-content: space-between;
+  // justify-content: space-between;
+`;
+
+const NavBar = styled.div`
+  // position: absolute;
+  margin-top: auto;
 `;
 
 class App extends React.Component {
@@ -45,7 +50,7 @@ class App extends React.Component {
   getCovers() {
     const { list } = this.state;
     for (let i = 0; i < list.length; i++) {
-      axios('/api/covers?id=' + list[i].cover)
+      axios(`/api/covers?id=${list[i].cover}`)
         // .then(res => console.log(res.data.url))
         .then(res => list[i].cover = 'https:' + res.data.url.replace('t_thumb', 't_cover_big'))
         // .then(res => this.setState({ covers: res.data }))
@@ -100,10 +105,10 @@ class App extends React.Component {
     return (
       <Container>
         {currentTab}
-        <div>
+        <NavBar>
           {/* add animation to show/hide based on navBar status in state */}
           {toggleBar}
-        </div>
+        </NavBar>
       </Container>
     );
   }

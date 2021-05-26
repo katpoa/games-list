@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import GameEntry from './GameEntry.jsx';
+import axios from 'axios';
+
 
 const Container = styled.div`
     height: 100vh;
@@ -58,15 +60,10 @@ const Search = ({ list, toggleFavorite }) => {
     
     const [results, setResults] = useState([]);
     const search = (string) => {
-        const updated = [];
-        list.map(game => {
-            // if (game.name.toUpperCase().includes(string)) {
-            if (game.name.toUpperCase() === string.toUpperCase()) {
-                updated.push(game);
-            }
-        });
-        setResults(updated);
-    }
+        axios(`/api/search?input=${string}`)
+            .then(res => setResults(res.data))
+            .catch(err => console.log(err));
+    };
     const showResults = results.length
         ? results.map(game => (
             <GameEntry key={game.id} game={game} toggleFavorite={toggleFavorite}/>
@@ -78,7 +75,7 @@ const Search = ({ list, toggleFavorite }) => {
                 <Icon src="search.svg"/>
                 <Input 
                     type="text"
-                    value={text.toUpperCase()}
+                    value={text}
                     placeholder="SEARCH GAMES"
                     onChange={handleChange}
                     // change color of cursor to purple
